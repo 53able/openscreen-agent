@@ -1,39 +1,46 @@
-# OpenScreen CLI agent skill
+# OpenScreen CLI をエージェントから使う
 
-OpenScreen の CLI をエージェントから利用するための手順と、終了コード・JSON・成果物の検査スクリプトです。録画、ソース一覧、字幕、MP4/GIF 書き出し、プロジェクト梱包を扱います。OpenScreen の公式プロジェクトではありません。
-
-## 対応バージョン
-
-**OpenScreen CLI v1.13.0** を対象とします。macOS にインストールされた v1.13.0 で `help`、合成動画からの `info` / `pack` / MP4 `export --json` とチェッカーを検査しました。`record`、`captions`、GIF、音声後付け、Windows/Linux、および他バージョンは実機での E2E 検査をしていません。したがって、すべての操作が v1.13.0 で動作確認済みという意味ではありません。使う前にインストール版の `help` と[公式 CLI ドキュメント](https://getopenscreen.com/ja/docs/cli/)を確認してください。OpenScreen 自体は別途インストールし、録画にはデスクトップと OS 権限が必要です。
+画面録画から字幕・書き出しまでを、[OpenScreen の CLI](https://getopenscreen.com/ja/docs/cli/) で進めるためのエージェントスキルです。終了コード、JSON 出力、成果物の存在を検査するスクリプトも同梱しています。OpenScreen の公式プロジェクトではありません。
 
 ## インストール
 
-[`vercel-labs/skills`](https://github.com/vercel-labs/skills) の CLI に対応した `skills/openscreen-cli/SKILL.md` 配置です。
+[vercel-labs/skills](https://github.com/vercel-labs/skills) の CLI からインストールできます。
 
 ```bash
 npx skills add 53able/openscreen-cli-skill --skill openscreen-cli
 ```
 
-インストール先やエージェントを選ぶには `npx skills add 53able/openscreen-cli-skill --list` と `npx skills add --help` を参照してください。CLI はスキルを配置するツールであり、OpenScreen アプリ本体はインストールしません。
+OpenScreen アプリ本体は別途インストールしてください。このコマンドはスキルだけを追加します。インストール対象の確認には `npx skills add 53able/openscreen-cli-skill --list` を使えます。
 
-## 内容
+## できること
 
-- [`skills/openscreen-cli/SKILL.md`](skills/openscreen-cli/SKILL.md): 分岐付きの実行手順
-- [`references/platform-and-protocol.md`](skills/openscreen-cli/references/platform-and-protocol.md): OS 別実行ファイル、オプション、JSON 出力と制限
-- [`references/project-json.md`](skills/openscreen-cli/references/project-json.md): バージョン 2 のプロジェクト JSON への編集例（形式の事前検査が必須）
-- [`scripts/check-result.py`](skills/openscreen-cli/scripts/check-result.py): CLI 終了コード、JSON イベント、出力の存在を検査
+- 画面・ウィンドウ・マイクの一覧を確認し、デスクトップで録画する
+- 録画音声から字幕を生成し、MP4/GIF に書き出す
+- カーソルのクリック情報がある録画に自動ズームを適用する
+- `.openscreen` プロジェクトと参照メディアを梱包する
+- CLI の終了コード、JSON 出力、生成ファイルを検査する
 
-動作上の制限：このチェッカーは動画の画質、音声、個人情報の映り込みを検査しません。録画・字幕・GIFの実機検査も未実施です。無人の Linux 画面録画、GUI 上の編集、汎用動画エンコードは対象外です。
+たとえばエージェントには「OpenScreen でウィンドウを20秒録画して MP4 に書き出し、CLI の結果と動画ファイルの存在を確認して」と依頼できます。録画には実際のデスクトップセッションと OS の許可が必要です。Linux の画面共有ダイアログを無人で操作するスキルではありません。
 
-## 開発・検査
+## 対応する OpenScreen CLI
+
+**対象バージョン：v1.13.0。** macOS 版で `help`、合成動画を使った `info`・`pack`・MP4 `export --json`、同梱チェッカーを検査しました。**実際の画面録画、字幕、GIF、音声後付け、Windows/Linux、および他バージョンは E2E 未検証**です。対象バージョンでも全機能の動作を保証するものではありません。実行前にインストール版の `help` と [公式 CLI ドキュメント](https://getopenscreen.com/ja/docs/cli/)を確認してください。
+
+同梱チェッカーは画質、音声の同期、個人情報の映り込みを判定できません。書き出した動画は別途再生して点検してください。GUI 上の編集や汎用動画エンコードも対象外です。
+
+## ファイルと開発
+
+- [`SKILL.md`](skills/openscreen-cli/SKILL.md)：エージェント向けの実行手順
+- [`platform-and-protocol.md`](skills/openscreen-cli/references/platform-and-protocol.md)：OS 別起動方法、オプション、JSON 出力
+- [`project-json.md`](skills/openscreen-cli/references/project-json.md)：形式を検査してから行うプロジェクト JSON 編集例
+- [`check-result.py`](skills/openscreen-cli/scripts/check-result.py)：CLI 結果の機械的な検査
+
+チェッカーの単体テストは OpenScreen を起動せずに実行できます（Python 3.9 以上）。
 
 ```bash
 python3 -m unittest discover -s tests -v
-npx skills add . --list
 ```
-
-Python 3.9 以上を使用します。OpenScreen を起動しないチェッカーの単体テストはローカルで実行できます。
 
 ## ライセンス
 
-MIT License。詳細は [LICENSE](LICENSE) を参照。OpenScreen 本体と `vercel-labs/skills` のライセンスは、それぞれの公開元を確認してください。
+[MIT License](LICENSE)。OpenScreen 本体と `vercel-labs/skills` はそれぞれ別のプロジェクトです。
