@@ -7,10 +7,10 @@
 [vercel-labs/skills](https://github.com/vercel-labs/skills) の CLI からインストールできます。
 
 ```bash
-npx skills add 53able/openscreen-cli-skill --skill openscreen-cli
+npx skills add 53able/openscreen-agent --skill openscreen-cli
 ```
 
-OpenScreen アプリ本体は別途インストールしてください。このコマンドはスキルだけを追加します。インストール対象の確認には `npx skills add 53able/openscreen-cli-skill --list` を使えます。
+OpenScreen アプリ本体は別途インストールしてください。このコマンドはスキルだけを追加します。インストール対象の確認には `npx skills add 53able/openscreen-agent --list` を使えます。
 
 ## できること
 
