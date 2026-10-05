@@ -7,7 +7,7 @@ description: OpenScreenのCLIで画面録画、ソース確認、字幕生成、
 
 ## 手順
 
-1. **実行環境を確定する。** `openscreen help` を実行し、見つからなければ `references/platform-and-protocol.md` のOS別実行ファイルを確認してフルパスで再試行する。CLIのオプションを表示し、インストール版を記録して自動化では更新を固定する。`record` には実際のデスクトップセッションが必要。録画する画面・音声の範囲と保存先を決め、機密情報を映さない準備をする。OSの録画・入力アクセス権限とLinuxの共有ダイアログは利用者に処理してもらう。起動できなければ止め、CLIを使えたと報告しない。
+1. **実行環境を確定する。** `openscreen help` を実行し、見つからなければ `references/platform-and-protocol.md` のOS別実行ファイルを確認してフルパスで再試行する。実行ファイルも見つからない場合は、同参照の「未インストール時の案内」に従い、OSに合う導入方法と導入後の確認コマンドを利用者に示して録画・書き出しを止める。実行ファイルがあるのに起動できない場合は、未インストールと決めつけず、エラーを確認する。CLIのオプションを表示し、インストール版を記録して自動化では更新を固定する。`record` には実際のデスクトップセッションが必要。録画する画面・音声の範囲と保存先を決め、機密情報を映さない準備をする。OSの録画・入力アクセス権限とLinuxの共有ダイアログは利用者に処理してもらう。起動できなければ止め、CLIを使えたと報告しない。
 2. **対象と経路を決める。** 新規録画なら `sources --json` を実行して対象を確認し、Step 3へ。既存 `.openscreen` の書き出しだけなら `info <project> --json` でメディア参照を確認してStep 4へ。他社製動画を使う場合だけ `references/platform-and-protocol.md` の最小プロジェクトを確認する。クリック情報のない動画に自動ズームを期待しない。
 3. **録画する。** 人がアクセスを許可したデスクトップで `record --duration <seconds> --project <unique-name>.openscreen --json` を実行する。対象は `--window <title>` / `--display <index>`、音声は `--mic` / `--mic-device <name>` / `--system-audio` から選ぶ。選択の詳細とOS別の停止手段は `references/platform-and-protocol.md` を読む。自動ズーム用のカーソルデータを残すには既定の編集可能カーソルを使い、`--cursor system` を指定しない。正常終了を待ち、強制終了した録画を完成と見なさない。Linuxでは共有対象を人が選択するまで待つ。
 4. **必要な処理だけ行う。** 録画内に音声があり字幕が必要なら `captions <project> --json` を実行する。これはプロジェクトに字幕注釈を書き、書き出し時に焼き込む。字幕の語数調整・再実行時の置換は `references/platform-and-protocol.md` を読む。手動ズームやテキスト注釈をJSONで追加する場合に限り `references/project-json.md` を読み、バックアップ・形式検査・`info` による再検証を行う。必要な処理がなければ編集を省く。

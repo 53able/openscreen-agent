@@ -8,6 +8,20 @@
 - Windows インストーラー: インストール先の `Openscreen.exe`。現在のユーザー向けなら `%LOCALAPPDATA%\Programs\Openscreen\Openscreen.exe`、全ユーザー向けなら `C:\Program Files\Openscreen\Openscreen.exe`。PowerShellでは `& 'C:\Program Files\Openscreen\Openscreen.exe' help`。
 - Linux パッケージ / Nix: `openscreen`。AppImage: ダウンロードした実行ファイルをそのディレクトリから呼ぶ。実ファイル名は版に合わせる。
 
+## 未インストール時の案内
+
+`openscreen` がPATHにないだけなら、上記の実行ファイルをフルパスで呼び出す。実行ファイルも見つからなければ、「OpenScreenの実行ファイルが見つからないため、この環境では録画・書き出しを開始できない」と伝え、[公式インストール手順](https://getopenscreen.com/ja/docs/installation/)と[公式リリース](https://github.com/getopenscreen/openscreen/releases)を案内する。CLIはデスクトップアプリに含まれるため、独立したCLIパッケージの導入コマンドを推測しない。
+
+- 利用環境のOSとCPUアーキテクチャに合う配布物を公式ページで確認して示す。特定のダウンロードURLやパッケージ管理コマンドは、公式情報で確認できたものだけ案内する。
+  - macOS: Apple Silicon / Intelに合う `.dmg` を入手し、アプリをApplicationsに配置する。
+  - Windows: 公式ガイドのMicrosoft Store、または特定版が必要ならReleasesの `.exe` を案内する。
+  - Linux: ディストリビューションに合うパッケージ、またはAppImageを案内する。録画にはデスクトップ環境が必要。
+- 導入後は上記のOS別実行ファイルで `help` を実行するよう案内する。エージェントが導入完了を確認できる場合は実行し、成功後に元の依頼へ戻る。
+- 本スキルのCLI仕様メモは[v1.13.0](https://github.com/getopenscreen/openscreen/releases/tag/v1.13.0)を対象としている。最新版が同じ仕様とは限らないため、導入した版の `help` と[公式CLIドキュメント](https://getopenscreen.com/ja/docs/cli/)で必要なコマンド・オプションを確認する。必要な機能を確認できなければ処理を止め、対応版が必要なことを説明する。
+- インストールの案内だけではダウンロード・インストールを開始しない。利用者が導入作業も依頼している場合は、その範囲で作業する。インストール済みのアプリを無断で置き換えたり、ダウングレードしたりしない。
+
+実行ファイルが存在するのに起動に失敗する場合は、stderrなどを確認して起動エラーとして扱い、再インストールが必要と即断しない。
+
 ## 基本コマンド
 
 ```bash
