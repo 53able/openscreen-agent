@@ -35,10 +35,10 @@ OpenScreen アプリ本体は別途インストールしてください。この
 - [`project-json.md`](skills/openscreen-cli/references/project-json.md)：形式を検査してから行うプロジェクト JSON 編集例
 - [`check-result.py`](skills/openscreen-cli/scripts/check-result.py)：CLI 結果の機械的な検査
 
-チェッカーの単体テストは OpenScreen を起動せずに実行できます（Python 3.9 以上）。
+同梱の Python は `uv` 経由で実行します（Python 3.9 以上）。チェッカーの単体テストは OpenScreen を起動せずに実行できます。
 
 ```bash
-python3 -m unittest discover -s tests -v
+uv run --no-project python -m unittest discover -s tests -v
 ```
 
 ## ライセンス

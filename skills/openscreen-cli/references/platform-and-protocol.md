@@ -36,7 +36,7 @@ openscreen pack demo.openscreen --out bundle/ --json
 OSCLI=/Applications/Openscreen.app/Contents/MacOS/Openscreen
 "$OSCLI" export demo.openscreen -o demo.mp4 --auto-zoom --json > export.jsonl 2> export.stderr
 code=$?
-python3 skills/openscreen-cli/scripts/check-result.py --command export --exit-code "$code" --input export.jsonl --artifact demo.mp4
+uv run --no-project python skills/openscreen-cli/scripts/check-result.py --command export --exit-code "$code" --input export.jsonl --artifact demo.mp4
 ```
 
 Linuxでは `OSCLI=openscreen` に変更する。Windows/PowerShellは `$LASTEXITCODE` と `2>` によってCLIの終了コードとstderrを確保する。上の例はこのリポジトリ直下を作業ディレクトリにした場合。スキルをインストールして使う場合は、インストール先のスキルディレクトリにある `scripts/check-result.py` を指定する。
